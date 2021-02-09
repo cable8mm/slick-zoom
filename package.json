@@ -1,0 +1,19 @@
+{
+  "name": "slick-zoom",
+  "version": "1.0.0",
+  "description": "zoomable carousel for mobile. This is packaging for npm installing.",
+  "main": "slick-zoom.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cable8mm/slick-zoom.git"
+  },
+  "keywords": [
+    "slick-zoom"
+  ],
+  "author": "Neil Ding",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cable8mm/slick-zoom/issues"
+  },
+  "homepage": "https://github.com/cable8mm/slick-zoom#readme"
+}
