@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/cable8mm/slick-zoom/issues"
   },
-  "homepage": "https://github.com/cable8mm/slick-zoom#readme"
+  "homepage": "https://github.com/cable8mm/slick-zoom#readme",
+  "devDependencies": {
+    "eslint": "^8.52.0"
+  },
+  "dependencies": {
+    "photoswipe": "^5.4.2"
+  }
 }
