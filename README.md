@@ -1,10 +1,11 @@
 # slick-zoom
 
-## About
-
-[![npm version](https://badge.fury.io/js/slick-zoom.svg)](https://badge.fury.io/js/slick-zoom)
+![npm Version](https://img.shields.io/npm/v/slick-zoom)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/slick-zoom)
 [![NPM Downloads](https://img.shields.io/npm/dt/npm-badger.svg)](https://www.npmjs.com/package/slick-zoom)
-[![](https://data.jsdelivr.com/v1/package/npm/slick-zoom/badge?style=rounded)](https://www.jsdelivr.com/package/npm/slick-zoom)
+![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hy/slick-zoom)
+![NPM Type Definitions](https://img.shields.io/npm/types/slick-zoom)
+![NPM License](https://img.shields.io/npm/l/slick-zoom)
 
 [slick-zoom](https://github.com/GingerBear/slick-zoom) - zoomable carousel for mobile is awesome jquery library, but no way to install npm.
 
@@ -48,3 +49,7 @@ $(el)
 ## Reference
 
 - holapet.com
+
+## License
+
+The Slick Zoom project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
