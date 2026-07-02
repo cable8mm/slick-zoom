@@ -7,7 +7,7 @@
 ![NPM Type Definitions](https://img.shields.io/npm/types/slick-zoom)
 ![NPM License](https://img.shields.io/npm/l/slick-zoom)
 
-[slick-zoom](https://github.com/GingerBear/slick-zoom) - zoomable carousel for mobile is awesome jquery library, but no way to install npm.
+[slick-zoom](https://github.com/GingerBear/slick-zoom) - zoomable carousel for mobile is an awesome jquery library, but had no way to install via npm.
 
 This repository make it possible.
 
@@ -16,11 +16,24 @@ This repository make it possible.
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.2/dist/umd/photoswipe-lightbox.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+  media="all"
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.2/dist/photoswipe.min.css"
 />
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+  media="all"
+  rel="stylesheet"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<link
+  href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.2/dist/photoswipe.min.css"
+  media="all"
+  rel="stylesheet"
+/>
+<script type="module" src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.2/dist/photoswipe-lightbox.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-zoom@1.0.0/slick-zoom.min.js"></script>
 ```
 
@@ -42,8 +55,13 @@ $(el)
       arrows: false,
     },
     item: ".img-item",
-    startIndex: $(".imgbox.slick-slider").length,
   });
+```
+
+## Testing
+
+```sh
+npm test
 ```
 
 ## Reference
