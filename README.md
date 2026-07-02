@@ -16,18 +16,18 @@ This repository make it possible.
 ### CDN
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link
-  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
   media="all"
   rel="stylesheet"
 />
 <link
-  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
   media="all"
   rel="stylesheet"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 <link
   href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.2/dist/photoswipe.min.css"
   media="all"
@@ -56,6 +56,12 @@ $(el)
     },
     item: ".img-item",
   });
+```
+
+## Testing
+
+```sh
+npm test
 ```
 
 ## Reference
