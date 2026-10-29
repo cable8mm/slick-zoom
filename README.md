@@ -1,10 +1,10 @@
 # slick-zoom
 
-![npm Version](https://img.shields.io/npm/v/slick-zoom)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/slick-zoom)
+[![npm Version](https://img.shields.io/npm/v/slick-zoom)](https://www.npmjs.com/package/slick-zoom)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/slick-zoom)](https://bundlephobia.com/package/slick-zoom)
 [![NPM Downloads](https://img.shields.io/npm/dt/slick-zoom.svg)](https://www.npmjs.com/package/slick-zoom)
-![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hy/slick-zoom)
-![NPM License](https://img.shields.io/npm/l/slick-zoom)
+[![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hy/slick-zoom)](https://www.jsdelivr.com/package/npm/slick-zoom)
+[![License](https://img.shields.io/github/license/cable8mm/slick-zoom)](LICENSE.md)
 
 [slick-zoom](https://github.com/GingerBear/slick-zoom) - zoomable carousel for mobile is an awesome jquery library, but had no way to install via npm.
 
@@ -36,6 +36,8 @@ const $ = require("jquery");
 require("slick-carousel");
 require("slick-zoom");
 ```
+
+Use this CommonJS example in a browser application bundle where `window` and `document` are available. It is not a standalone Node.js example.
 
 ## Usage
 
