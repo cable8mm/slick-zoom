@@ -6,37 +6,36 @@ const $ = require("jquery");
 global.$ = $;
 global.jQuery = $;
 
+global.mockPhotoSwipeInstances = [];
+
 // Mock PhotoSwipe
 class MockPhotoSwipe {
-  constructor() {
+  constructor(options) {
+    this.options = options;
+    this.currIndex = options.index;
     this.currSlide = { data: { el: null } };
+    this.listeners = {};
+    global.mockPhotoSwipeInstances.push(this);
   }
   init() {}
-  on() {}
+  on(event, callback) {
+    this.listeners[event] = callback;
+  }
 }
 global.PhotoSwipe = MockPhotoSwipe;
 
 // Import Slick Carousel
 require("slick-carousel");
 
-require("./slick-zoom.js");
+require("../slick-zoom.js");
 
 describe("slickZoom jQuery Plugin", () => {
   let container;
 
   beforeEach(() => {
+    global.mockPhotoSwipeInstances.length = 0;
     // Setup DOM structure
     document.body.innerHTML = `
-      <div class="pswp">
-        <div class="pswp__bg"></div>
-        <div class="pswp__scroll-wrap">
-          <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-          </div>
-        </div>
-      </div>
       <div class="image-carousel">
         <div class="image-carousel-item">
           <img src="https://placehold.co/800x400" alt="Image 1" />
@@ -69,7 +68,7 @@ describe("slickZoom jQuery Plugin", () => {
 
     test("should add data-pswp-uid attribute", () => {
       container.slickZoom();
-      expect(container.attr("data-pswp-uid")).toBe("1");
+      expect(container.attr("data-pswp-uid")).toMatch(/^\d+$/);
     });
 
     test("should initialize with custom options", () => {
@@ -93,19 +92,17 @@ describe("slickZoom jQuery Plugin", () => {
   });
 
   describe("Error Handling", () => {
-    test("should log error when .pswp element is missing", () => {
+    test("should open PhotoSwipe without a .pswp element", async () => {
       const consoleSpy = jest.spyOn(console, "error").mockImplementation();
-      $(".pswp").remove();
-
       container.slickZoom();
 
-      // Trigger click to invoke openPhotoSwipe which checks for .pswp
       const firstItem = container.find(".image-carousel-item").first();
       firstItem.trigger("click");
+      await Promise.resolve();
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "PhotoSwipe element not found. Please add a .pswp element to your page.",
-      );
+      expect(consoleSpy).not.toHaveBeenCalled();
+      expect(global.mockPhotoSwipeInstances).toHaveLength(1);
+      expect(global.mockPhotoSwipeInstances[0].options.index).toBe(0);
 
       consoleSpy.mockRestore();
     }, 10000);
@@ -237,16 +234,6 @@ describe("slickZoom jQuery Plugin", () => {
     test("should handle multiple carousels with different UIDs", () => {
       // Clear and re-setup for this test
       document.body.innerHTML = `
-        <div class="pswp">
-          <div class="pswp__bg"></div>
-          <div class="pswp__scroll-wrap">
-            <div class="pswp__container">
-              <div class="pswp__item"></div>
-              <div class="pswp__item"></div>
-              <div class="pswp__item"></div>
-            </div>
-          </div>
-        </div>
         <div class="carousel-1">
           <div class="image-carousel-item">
             <img src="https://placehold.co/800x400" alt="Image 1" />
@@ -273,8 +260,11 @@ describe("slickZoom jQuery Plugin", () => {
         item: ".image-carousel-item",
       });
 
-      expect(carousel1.attr("data-pswp-uid")).toBe("1");
-      expect(carousel2.attr("data-pswp-uid")).toBe("2");
+      expect(carousel1.attr("data-pswp-uid")).toMatch(/^\d+$/);
+      expect(carousel2.attr("data-pswp-uid")).toMatch(/^\d+$/);
+      expect(carousel1.attr("data-pswp-uid")).not.toBe(
+        carousel2.attr("data-pswp-uid"),
+      );
     });
   });
 });

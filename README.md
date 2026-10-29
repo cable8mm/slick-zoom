@@ -55,6 +55,10 @@ $(el)
 
 Each selected gallery needs at least two slide items to enable Slick. PhotoSwipe 5 creates its own viewer element, so no `.pswp` markup is needed. Each slide item should contain an `<img>`; its intrinsic dimensions are used when available.
 
+## Example
+
+Open [`examples/index.html`](examples/index.html) in a browser to try the CDN setup.
+
 ## Testing
 
 ```sh
