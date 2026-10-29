@@ -1,104 +1,118 @@
-$.fn.slickZoom = function (options) {
-  options = options || {};
+(function (root, factory) {
+  if (typeof module === "object" && module.exports) {
+    const $ = require("jquery");
+    module.exports = factory($, () => import("photoswipe"));
+  } else {
+    factory(root.jQuery || root.$, () => Promise.resolve(root.PhotoSwipe));
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this, function ($, loadPhotoSwipe) {
+  if (!$ || !$.fn) {
+    throw new Error("slick-zoom requires jQuery to be loaded first.");
+  }
 
-  $(this).each((i, container) => {
-    const $container = $(container);
-    const firstChild = $container.children().first();
+  let nextGalleryUid = 1;
 
-    // Set default item selector if not provided
-    if (!options.item) {
-      const firstChildClass = firstChild.attr("class");
-      options.item = firstChildClass ? `.${firstChildClass}` : ".item";
-    }
+  $.fn.slickZoom = function (options) {
+    const settings = options || {};
 
-    const items = $container.find(options.item);
-    const slickOptions = options.slickOptions || {
-      dots: true,
-      speed: 300,
-      infinite: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: false,
-      accessibility: false,
-    };
-
-    const slickInstance =
-      items.length >= 2 ? $container.slick(slickOptions) : null;
-
-    // init photoswipe
-    $container.attr("data-pswp-uid", i + 1).on("click", options.item, (e) => {
-      e.preventDefault();
-      const slideItem = $(e.currentTarget);
-      const index = getOriginalIndex(slideItem);
-      openPhotoSwipe(index, $container);
-    });
-
-    function getOriginalIndex(slideItem) {
-      // Calculate the original index by accounting for cloned slides
-      const clonedSlides = slideItem.siblings(".slick-slide.slick-cloned");
-      const clonedCount = clonedSlides.length / 2;
-      return slideItem.index() - clonedCount;
-    }
-
-    function openPhotoSwipe(index, $gallery) {
-      const pswpElement = $(".pswp")[0];
-
-      if (!pswpElement) {
-        console.error(
-          "PhotoSwipe element not found. Please add a .pswp element to your page.",
-        );
-        return;
-      }
-
-      const images = parseImages($gallery);
-
-      if (!images || images.length === 0) {
-        console.error("No images found in gallery");
-        return;
-      }
-
-      // Ensure index is within bounds
-      const safeIndex = Math.max(
-        0,
-        Math.min(parseInt(index, 10), images.length - 1),
-      );
-
-      const photoSwipeOptions = options.photoSwipeOptions || {
-        index: safeIndex,
-        galleryUID: $gallery.attr("data-pswp-uid"),
+    return this.each(function () {
+      const $container = $(this);
+      const firstChildClass = $container.children().first().attr("class");
+      const itemSelector =
+        settings.item ||
+        (firstChildClass ? `.${firstChildClass.trim().split(/\s+/)[0]}` : ".item");
+      const $items = $container.find(itemSelector);
+      const slickOptions = settings.slickOptions || {
+        dots: true,
+        speed: 300,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: false,
+        accessibility: false,
       };
+      const slickInstance =
+        $items.length >= 2 && typeof $container.slick === "function"
+          ? ($container.slick(slickOptions), $container)
+          : null;
+      const galleryUid = nextGalleryUid++;
 
-      // Pass data to PhotoSwipe and initialize it
-      const gallery = new PhotoSwipe(pswpElement, images, photoSwipeOptions);
-      gallery.init();
-
-      // slide the slick carousel in the background when the zoom carousel is moving
-      if (slickInstance) {
-        gallery.on("change", () => {
-          if (!gallery.currSlide || !gallery.currSlide.data) {
-            return;
-          }
-
-          const slideItem = $(gallery.currSlide.data.el).closest(options.item);
-          if (slideItem.length) {
-            const currentIndex = getOriginalIndex(slideItem);
-            slickInstance.slick("slickGoTo", currentIndex);
-          }
+      $container
+        .attr("data-pswp-uid", galleryUid)
+        .off("click.slickZoom", itemSelector)
+        .on("click.slickZoom", itemSelector, function (event) {
+          event.preventDefault();
+          openPhotoSwipe(originalIndex($(this)), $container);
         });
-      }
-    }
 
-    function parseImages(el) {
-      return el
-        .find(options.item + ":not(.slick-cloned) img")
-        .map((i, img) => ({
-          el: img,
-          src: img.src,
-          msrc: img.src,
-          w: img.naturalWidth || img.width || 800,
-          h: img.naturalHeight || img.height || 600,
-        }))
-        .get();
-    }
-  });
-};
+      function originalIndex($item) {
+        const slickIndex = Number.parseInt($item.attr("data-slick-index"), 10);
+        const originalItems = $container.find(
+          `${itemSelector}:not(.slick-cloned)`,
+        );
+        if (Number.isFinite(slickIndex) && originalItems.length) {
+          return ((slickIndex % originalItems.length) + originalItems.length) %
+            originalItems.length;
+        }
+        return $item
+          .closest(".slick-slide")
+          .index();
+      }
+
+      function parseImages() {
+        return $container
+          .find(`${itemSelector}:not(.slick-cloned)`)
+          .map((index, item) => {
+            const img = $(item).find("img").first()[0];
+            if (!img) return null;
+            return {
+              src: img.currentSrc || img.src,
+              width: img.naturalWidth || img.width || 800,
+              height: img.naturalHeight || img.height || 600,
+              alt: img.alt,
+              element: img,
+            };
+          })
+          .get();
+      }
+
+      function openPhotoSwipe(index) {
+        const images = parseImages();
+        if (!images.length) {
+          console.error("No images found in gallery");
+          return;
+        }
+
+        loadPhotoSwipe()
+          .then((module) => {
+            const PhotoSwipe = module && (module.default || module);
+            if (typeof PhotoSwipe !== "function") {
+              throw new Error(
+                "PhotoSwipe could not be loaded. Check the PhotoSwipe script or package dependency.",
+              );
+            }
+
+            const safeIndex = Math.max(
+              0,
+              Math.min(Number.parseInt(index, 10) || 0, images.length - 1),
+            );
+            const gallery = new PhotoSwipe({
+              ...(settings.photoSwipeOptions || {}),
+              dataSource: images,
+              index: safeIndex,
+            });
+
+            if (slickInstance) {
+              gallery.on("change", () => {
+                slickInstance.slick("slickGoTo", gallery.currIndex);
+              });
+            }
+            gallery.init();
+          })
+          .catch((error) => console.error(error));
+      }
+    });
+  };
+
+  return $;
+});
