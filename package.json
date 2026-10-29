@@ -35,5 +35,9 @@
   "peerDependencies": {
     "jquery": ">=3.0.0",
     "slick-carousel": ">=1.8.0"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "unrs-resolver@1.12.2": true
   }
 }
