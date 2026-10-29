@@ -4,7 +4,6 @@
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/slick-zoom)
 [![NPM Downloads](https://img.shields.io/npm/dt/slick-zoom.svg)](https://www.npmjs.com/package/slick-zoom)
 ![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hy/slick-zoom)
-![NPM Type Definitions](https://img.shields.io/npm/types/slick-zoom)
 ![NPM License](https://img.shields.io/npm/l/slick-zoom)
 
 [slick-zoom](https://github.com/GingerBear/slick-zoom) - zoomable carousel for mobile is an awesome jquery library, but had no way to install via npm.
@@ -23,7 +22,7 @@ Load jQuery, Slick, and the PhotoSwipe 5 core before slick-zoom. The PhotoSwipe 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.2/dist/umd/photoswipe.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/slick-zoom@1.0.0/slick-zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-zoom@2.0.2/slick-zoom.js"></script>
 ```
 
 ### NPM
