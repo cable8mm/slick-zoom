@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "zoomable carousel for mobile. This is packaging for npm installing.",
   "main": "slick-zoom.js",
+  "files": [
+    "slick-zoom.js"
+  ],
   "scripts": {
     "test": "jest"
   },

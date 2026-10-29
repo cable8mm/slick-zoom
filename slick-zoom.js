@@ -1,7 +1,11 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) {
     const $ = require("jquery");
-    module.exports = factory($, () => import("photoswipe"));
+    module.exports = factory($, () =>
+      typeof globalThis.PhotoSwipe === "function"
+        ? Promise.resolve(globalThis.PhotoSwipe)
+        : import("photoswipe"),
+    );
   } else {
     factory(root.jQuery || root.$, () => Promise.resolve(root.PhotoSwipe));
   }

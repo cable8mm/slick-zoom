@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Slick Zoom demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.2/dist/photoswipe.css"
+    />
+    <style>
+      body {
+        margin: 2rem auto;
+        max-width: 48rem;
+        padding: 0 1rem;
+      }
+
+      .image-carousel-item img {
+        display: block;
+        height: auto;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Slick Zoom</h1>
+    <p>Click or tap an image to open it in PhotoSwipe.</p>
+
+    <div class="image-carousel">
+      <div class="image-carousel-item">
+        <img src="https://placehold.co/1200x800?text=Image+1" alt="Image 1" />
+      </div>
+      <div class="image-carousel-item">
+        <img src="https://placehold.co/1200x800?text=Image+2" alt="Image 2" />
+      </div>
+      <div class="image-carousel-item">
+        <img src="https://placehold.co/1200x800?text=Image+3" alt="Image 3" />
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.2/dist/umd/photoswipe.umd.min.js"></script>
+    <script src="../slick-zoom.js"></script>
+    <script>
+      $(function () {
+        $(".image-carousel").slickZoom();
+      });
+    </script>
+  </body>
+</html>
