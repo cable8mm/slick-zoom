@@ -28,5 +28,9 @@
   },
   "dependencies": {
     "photoswipe": "^5.4.2"
+  },
+  "peerDependencies": {
+    "jquery": ">=3.0.0",
+    "slick-carousel": ">=1.8.0"
   }
 }
